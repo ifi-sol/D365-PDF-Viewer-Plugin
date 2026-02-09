@@ -1,0 +1,20 @@
+2026-01-08 11:39:49.268 - Info	
+Packing D:\IFISol\mscrmdataverse-pdf-display-main\obj\PowerAppsToolsTemp_ifi\obj\Debug\Metadata to bin\Debug\PowerAppsToolsTemp_ifi.zip
+
+2026-01-08 11:39:49.290 - Info	Processing Component: Entities
+2026-01-08 11:39:49.294 - Info	Processing Component: Roles
+2026-01-08 11:39:49.298 - Info	Processing Component: Workflows
+2026-01-08 11:39:49.299 - Info	Processing Component: FieldSecurityProfiles
+2026-01-08 11:39:49.299 - Info	Processing Component: Templates
+2026-01-08 11:39:49.301 - Info	Processing Component: EntityMaps
+2026-01-08 11:39:49.301 - Info	Processing Component: EntityRelationships
+2026-01-08 11:39:49.305 - Info	Processing Component: OrganizationSettings
+2026-01-08 11:39:49.305 - Info	Processing Component: optionsets
+2026-01-08 11:39:49.307 - Info	Processing Component: CustomControls
+2026-01-08 11:39:49.317 - Info	 - POCControls.AccountSearchControl
+2026-01-08 11:39:49.322 - Info	Processing Component: SolutionPluginAssemblies
+2026-01-08 11:39:49.323 - Info	Processing Component: EntityDataProviders
+2026-01-08 11:39:49.332 - Info	Processing Sharded Component Files
+2026-01-08 11:39:49.363 - Info	
+Unmanaged Pack complete.
+

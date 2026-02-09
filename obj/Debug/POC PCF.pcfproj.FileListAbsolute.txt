@@ -1,0 +1,2 @@
+D:\IFISol\mscrmdataverse-pdf-display-main\obj\Debug\POC PCF.pcfproj.AssemblyReference.cache
+D:\IFISol\mscrmdataverse-pdf-display-main\obj\Debug\POC PCF.pcfproj.CoreCompileInputs.cache

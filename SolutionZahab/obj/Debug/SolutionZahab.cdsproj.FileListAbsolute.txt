@@ -1,0 +1,2 @@
+D:\IFISol\mscrmdataverse-pdf-display-main\SolutionZahab\obj\Debug\SolutionZahab.cdsproj.AssemblyReference.cache
+D:\IFISol\mscrmdataverse-pdf-display-main\SolutionZahab\obj\Debug\SolutionZahab.cdsproj.CoreCompileInputs.cache

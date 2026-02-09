@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "dgURWY/b4H5Wqs4Ezjv5K4PW3a/UDA++gHy+AZNR03pYTIrFYBGqrKlbAskmF3/rM5XN5Kh6u0Q7NHFYk2c+CA==",
+  "success": true,
+  "projectFilePath": "D:\\IFISol\\mscrmdataverse-pdf-display-main\\POC PCF.pcfproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.51.1\\microsoft.powerapps.msbuild.pcf.1.51.1.nupkg.sha512"
+  ],
+  "logs": []
+}

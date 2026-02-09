@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "2SrOhqDbUojGAbYLFw930Ohv2R4hEoUxlzM4XR7ZHGXlGKNqfw9L8ineqsBUT/wDifVKjbcW09gwwbA8KW7eoA==",
+  "success": true,
+  "projectFilePath": "D:\\IFISol\\mscrmdataverse-pdf-display-main\\SolutionZahab\\SolutionZahab.cdsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.51.1\\microsoft.powerapps.msbuild.pcf.1.51.1.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.powerapps.msbuild.solution\\1.51.1\\microsoft.powerapps.msbuild.solution.1.51.1.nupkg.sha512"
+  ],
+  "logs": []
+}

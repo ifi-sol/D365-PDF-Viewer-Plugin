@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "3vtMrKz3ap/3ExPRI2pUPpw2mfL1MmFHSz1IUY0jw0yM33Fn7ye27jzM4wd63wi4uqbinwDmCotube7o4NUZ+A==",
+  "success": true,
+  "projectFilePath": "D:\\IFISol\\mscrmdataverse-pdf-display-main\\obj\\PowerAppsToolsTemp_ifi\\PowerAppsToolsTemp_ifi.cdsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.52.1\\microsoft.powerapps.msbuild.pcf.1.52.1.nupkg.sha512",
+    "C:\\Users\\Ifisol_Lenovo\\.nuget\\packages\\microsoft.powerapps.msbuild.solution\\1.52.1\\microsoft.powerapps.msbuild.solution.1.52.1.nupkg.sha512"
+  ],
+  "logs": []
+}

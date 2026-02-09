@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="Ifisol" constructor="EmailPdfViewer" version="0.0.9"
+    display-name-key="Ifisol Email PDF Viewer" 
+    description-key="A PCF control to view and navigate multiple PDF attachments directly within an Email record."
+    control-type="standard">
+
+    <external-service-usage enabled="false">
+    </external-service-usage>
+
+    <!-- This property is bound to the ID of the record (usually the Email ID) -->
+    <property name="accountId" display-name-key="Record ID" description-key="The GUID of the record to fetch attachments from"
+      of-type="SingleLine.Text" usage="bound" required="true" />
+
+    <resources>
+      <code path="index.ts" order="1" />
+    </resources>
+
+    <feature-usage>
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+
+  </control>
+</manifest>

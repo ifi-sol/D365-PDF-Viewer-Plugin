@@ -1,0 +1,2 @@
+D:\IFISol\mscrmdataverse-pdf-display-main\obj\PowerAppsToolsTemp_ifi\obj\Debug\PowerAppsToolsTemp_ifi.cdsproj.AssemblyReference.cache
+D:\IFISol\mscrmdataverse-pdf-display-main\obj\PowerAppsToolsTemp_ifi\obj\Debug\PowerAppsToolsTemp_ifi.cdsproj.CoreCompileInputs.cache
