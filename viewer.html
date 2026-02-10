@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PDF.js Viewer</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #525659; font-family: 'Segoe UI', sans-serif; }
+ 
+    /* --- Toolbar --- */
+    #searchBar {
+      position: sticky; top: 0; z-index: 100; background: #fff;
+      padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #searchInput { padding: 4px 8px; width: 180px; border: 1px solid #ccc; border-radius: 4px; }
+    #pageInput { padding: 4px 5px; width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 4px; }
+    .search-btn { padding: 4px 12px; cursor: pointer; background: #0078d4; color: white; border: none; border-radius: 4px; font-size: 13px; }
+    .divider { width: 1px; height: 24px; background: #ddd; margin: 0 5px; }
+    .info-text { font-size: 12px; color: #666; }
+ 
+    /* --- Viewer --- */
+    #viewerContainer {
+      position: relative;
+      overflow-y: auto;
+      height: calc(100vh - 45px);
+      padding: 12px 0;
+      scroll-behavior: smooth;
+    }
+ 
+    .page { position: relative; margin: 0 auto 16px auto; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    canvas { display: block; }
+ 
+    /* --- CRITICAL TEXT LAYER FIXES --- */
+    .textLayer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 1; /* Back to full visibility for selection highlights */
+      line-height: 1;
+      text-indent: 0;
+      z-index: 2;
+    }
+ 
+    .textLayer span {
+      color: transparent; /* Keep text transparent to avoid "ghosting" over the image */
+      position: absolute;
+      white-space: pre;
+      cursor: text;
+      transform-origin: 0% 0%;
+    }
+ 
+    /* --- DARKER SELECTION COLOR --- */
+    /* This creates a high-contrast dark blue highlight when you drag your mouse */
+    .textLayer ::selection {
+      background: rgba(0, 120, 212, 0.4); /* Darker Blue (Dynamics 365 theme color) */
+      color: transparent;
+    }
+ 
+    /* Firefox specific fix */
+    .textLayer span::-moz-selection {
+      background: rgba(0, 120, 212, 0.4);
+    }
+ 
+    .highlight { background-color: rgba(255, 255, 0, 0.5); border-radius: 2px; }
+    .highlight.active { background-color: rgba(255, 150, 0, 1.0); outline: 2px solid orange; }
+  </style>
+</head>
+<body dir="ltr">
+ 
+  <div id="searchBar">
+    <input type="text" id="searchInput" placeholder="Find in document..." />
+    <button class="search-btn" id="btnPrev">Previous</button>
+    <button class="search-btn" id="btnNext">Next</button>
+    <span id="searchStatus" class="info-text">0 of 0</span>
+    <div class="divider"></div>
+    <span class="info-text">Page:</span>
+    <input type="number" id="pageInput" min="1" value="1" />
+    <span id="totalPages" class="info-text">of 0</span>
+  </div>
+ 
+  <div id="viewerContainer"></div>
+ 
+  <script type="module">
+    const params = new URLSearchParams(location.search);
+    const displayUrl = params.get("display");
+    const workerUrl  = params.get("worker");
+    const fileUrl    = params.get("file");
+ 
+    await import(displayUrl);
+    const pdfjsLib = window.pdfjsLib;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
+ 
+    const container = document.getElementById("viewerContainer");
+    const pdf = await pdfjsLib.getDocument({ url: fileUrl }).promise;
+    const scale = 1.5;
+ 
+    document.getElementById("totalPages").innerText = `of ${pdf.numPages}`;
+    const pageInput = document.getElementById("pageInput");
+    pageInput.max = pdf.numPages;
+ 
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale });
+      const outputScale = window.devicePixelRatio || 1;
+ 
+      const pageDiv = document.createElement("div");
+      pageDiv.className = "page";
+      pageDiv.id = `page-${pageNum}`;
+      pageDiv.dataset.pageNumber = pageNum;
+      pageDiv.style.width = `${viewport.width}px`;
+      pageDiv.style.height = `${viewport.height}px`;
+ 
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = Math.floor(viewport.width * outputScale);
+      canvas.height = Math.floor(viewport.height * outputScale);
+      canvas.style.width = `${viewport.width}px`;
+      canvas.style.height = `${viewport.height}px`;
+      ctx.setTransform(outputScale, 0, 0, outputScale, 0, 0);
+ 
+      const textLayerDiv = document.createElement("div");
+      textLayerDiv.className = "textLayer";
+     
+      pageDiv.appendChild(canvas);
+      pageDiv.appendChild(textLayerDiv);
+      container.appendChild(pageDiv);
+ 
+      await page.render({ canvasContext: ctx, viewport }).promise;
+ 
+      const textContent = await page.getTextContent();
+      const textLayer = new pdfjsLib.TextLayer({
+        textContentSource: textContent,
+        container: textLayerDiv,
+        viewport: viewport,
+        enhanceTextSelection: false
+      });
+ 
+      await textLayer.render();
+    }
+ 
+    // Navigation and Search logic remains the same
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) pageInput.value = entry.target.dataset.pageNumber;
+      });
+    }, { root: container, threshold: 0.5 });
+    document.querySelectorAll('.page').forEach(p => observer.observe(p));
+ 
+    function jumpToPage(num) {
+      const target = document.getElementById(`page-${num}`);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    pageInput.addEventListener('change', () => jumpToPage(pageInput.value));
+ 
+    let matches = [];
+    let currentMatchIndex = -1;
+    const searchInput = document.getElementById("searchInput");
+    const searchStatus = document.getElementById("searchStatus");
+ 
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      document.querySelectorAll('.highlight').forEach(el => {
+        const p = el.parentNode; p.replaceChild(document.createTextNode(el.textContent), el); p.normalize();
+      });
+      matches = [];
+      if (!query) { searchStatus.innerText = "0 of 0"; return; }
+      document.querySelectorAll('.textLayer span').forEach(span => {
+        if (span.textContent.toLowerCase().includes(query)) {
+          const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          span.innerHTML = span.textContent.replace(regex, '<span class="highlight">$1</span>');
+        }
+      });
+      matches = document.querySelectorAll('.highlight');
+      if (matches.length > 0) { currentMatchIndex = 0; scrollToMatch(0); }
+      searchStatus.innerText = matches.length > 0 ? `1 of ${matches.length}` : "0 of 0";
+    });
+ 
+    function scrollToMatch(index) {
+      matches.forEach(m => m.classList.remove('active'));
+      const match = matches[index];
+      if (match) { match.classList.add('active'); match.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+ 
+    document.getElementById("btnNext").onclick = () => {
+      if (matches.length === 0) return;
+      currentMatchIndex = (currentMatchIndex + 1) % matches.length;
+      scrollToMatch(currentMatchIndex);
+      searchStatus.innerText = `${currentMatchIndex + 1} of ${matches.length}`;
+    };
+ 
+    document.getElementById("btnPrev").onclick = () => {
+      if (matches.length === 0) return;
+      currentMatchIndex = (currentMatchIndex - 1 + matches.length) % matches.length;
+      scrollToMatch(currentMatchIndex);
+      searchStatus.innerText = `${currentMatchIndex + 1} of ${matches.length}`;
+    };
+  </script>
+</body>
+</html>
